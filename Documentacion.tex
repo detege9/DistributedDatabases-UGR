@@ -1,0 +1,351 @@
+\documentclass[paper=a4, fontsize=12pt]{article} % A4 paper and 12pt font size
+
+% ---- Entrada y salida de texto -----
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[utf8]{inputenc}
+% \usepackage[light,math]{iwona}
+
+
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{pseudocode}
+\usepackage{listings}
+
+% ---- Idioma --------
+
+\usepackage[spanish, es-tabla]{babel} % Selecciona el español para palabras introducidas automáticamente, p.ej. "septiembre" en la fecha y especifica que se use la palabra Tabla en vez de Cuadro
+
+% ---- Otros paquetes ----
+
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{graphics,graphicx, floatrow} %para incluir imágenes y notas en las imágenes
+\usepackage{graphics,graphicx, float} %para incluir imágenes y colocarlas
+\usepackage{enumerate}
+\usepackage{subfigure}
+% \makesavenoteenv{tabular}
+% \makesavenoteenv{table}
+% Para hacer tablas comlejas
+%\usepackage{multirow}
+%\usepackage{threeparttable}
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{colortbl}
+
+\usepackage{xcolor}
+\usepackage{url}
+
+\usepackage{cite}
+
+\usepackage[bookmarks=true,
+    bookmarksnumbered=false, % true means bookmarks in
+             % left window are numbered
+    bookmarksopen=false,   % true means only level 1
+             % are displayed.
+    colorlinks=true,
+    urlcolor=webblue,
+    citecolor=webred,
+    linkcolor=webblue]{hyperref}
+\definecolor{webgreen}{rgb}{0, 0.5, 0} % less intense green
+\definecolor{webblue}{rgb}{0, 0, 0.5}  % less intense blue
+\definecolor{webred}{rgb}{0.5, 0, 0} % less intense red
+
+
+%% Define a new 'leo' style for the package that will use a smaller font.
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\ttfamily}}}
+\makeatother
+%% Now actually use the newly defined style.
+\urlstyle{leo}
+
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+
+\setlength\parindent{14pt} % SANGRÍA
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+%%%%% Para cambiar el tipo de letra en el título de la sección %%%%%%%%%%%
+% \usepackage{sectsty}
+% \chapterfont{\fontfamily{pag}\selectfont} %% for chapter if you want
+% \sectionfont{\fontfamily{pag}\selectfont}
+% \subsectionfont{\fontfamily{pag}\selectfont}
+% \subsubsectionfont{\fontfamily{pag}\selectfont}
+
+%----------------------------------------------------------------------------------------
+% TÍTULO Y DATOS DEL ALUMNO
+%----------------------------------------------------------------------------------------
+
+\title{ 
+\normalfont \normalsize 
+\textsc{{\bf Bases de datos distribuidas (2019-2020)} \\ Grado en Ingeniería Informática \\ Universidad de Granada} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Bases de Datos distribuidas\\% The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Daniel Terol Guerrero\\} % Nombre y apellidos
+
+\date{\normalsize\today} % Incluye la fecha actual
+
+%----------------------------------------------------------------------------------------
+% DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle % Muestra el Título
+\pagenumbering{gobble}
+\newpage %inserta un salto de página
+
+\tableofcontents % para generar el índice de contenidos
+\newpage
+\pagenumbering{arabic}
+
+\section{Práctica 1: Diseño conceptual y lógico global de la base de datos}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.525]{ER-BDD}
+  \caption{Entidad/Relación sobre la venta de vinos}
+  \label{er_vinos}
+\end{figure}
+
+\large HAY QUE PONER EL COMENTARIO DEL E/R Y DISCUTIR LAS DIFERENTES OPCIONES. \\
+
+\subsection {Paso a tablas}
+
+\begin{enumerate}
+\item \textbf{Productor} (\underline{\#productor}, DNI\_productor, nombre\_productor, direccion\_productor)
+\item \textbf{Vino} (\underline{\#vino}, marca\_vino, anyo\_cosecha, denominacion\_origen, graduacion,  cantidad\_stock, CA\_vino, viñedo\_procedencia)
+\item \textbf{Vino producido} (\underline{\#vino (CE2)}, \#productor (CE1), cantidad\_producida)
+\item \textbf{Sucursal} (\underline{\#sucursal}, nombre\_sucursal, ciudad\_sucursal, CA\_sucursal, director\_sucursal (CE9))
+\item \textbf{SucursalVendeVino} (\underline{\#sucursal (CE4), \#vino (CE2)})
+\item \textbf{SucursalSolicitaSucursal} (\underline{\#sucursal1 (CE4), \#sucursal2 (CE4)}, \underline{\#vino (CE2), fecha}, cantidad)
+\item \textbf{Cliente} (\underline{\#cliente}, DNI\_cliente, nombre\_cliente, dirección\_cliente, tipo\_cliente, CA\_cliente)
+\item \textbf{ClienteSolicitaVinoASucursal} (\underline{\#cliente(CE7), (\#sucursal(CE4)}, \underline{\#vino(CE2)) (CE5), fecha}, cantidad)
+\item \textbf{Empleado}(\underline{\#empleado}, DNI\_empleado, nombre\_empleado, fecha\_comienzo\_contrato, salario, direccion\_empleado)
+\item \textbf{EmpleadoTrabajaSucursal} (\underline{\#empleado (CE9), \#sucursal(CE4)})
+\end{enumerate}
+
+\subsection {Absorción de tablas}
+
+\begin{enumerate}
+\item \textbf{Productor} (\underline{\#productor}, DNI\_productor, nombre\_productor, direccion\_productor)
+\item \textbf{Vino} (\underline{\#vino}, marca\_vino, anyo\_cosecha, denominacion\_origen, graduacion,  cantidad\_stock, CA\_vino, viñedo\_procedencia, cantidad\_producida, \#productor(CE1))
+\item \textbf{Sucursal} (\underline{\#sucursal}, nombre\_sucursal, ciudad\_sucursal, CA\_sucursal, director\_sucursal (CE8))
+\item \textbf{SucursalVendeVino} (\underline{\#sucursal (CE3), \#vino (CE2)})
+\item \textbf{SucursalSolicitaSucursal} (\underline{\#sucursal1 (CE3), \#sucursal2 (CE3)}, \underline{\#vino (CE2), fecha}, cantidad)
+\item \textbf{Cliente} (\underline{\#cliente}, DNI\_cliente, nombre\_cliente, dirección\_cliente, tipo\_cliente, CA\_cliente)
+\item \textbf{ClienteSolicitaVinoASucursal} (\underline{\#cliente(CE6), (\#sucursal(CE3)}, \underline{\#vino(CE2)) (CE4), fecha}, cantidad)
+\item \textbf{Empleado}(\underline{\#empleado}, DNI\_empleado, nombre\_empleado, fecha\_comienzo\_contrato, salario, direccion\_empleado, \#sucursal(CE3))
+\end{enumerate}
+
+\section {Práctica 2: Diseño de la fragmentación y de la asignación}
+\subsection {Determinar qué relaciones deben fragmentarse y con qué tipo de fragmentación}
+\begin{itemize}
+\item Según la descripción del problema, las sucursales pertenecen a delegaciones, que abarcan diferentes comunidades autónomas. Por tanto, se realizará una fragmentación horizontal primaria de la tabla \textbf{Sucursal} con el atributo \textit{CA\_sucursal}
+\item Como los empleados solo pueden trabajar en una sucursal, es interesante tener los empleados que trabajan en cada sucursal junto a la información de la sucursal. Por tanto, va a realizar una fragmentación horizontal derivada de la tabla \textbf{Empleado} por el atributo \textit{\#sucursal}.
+\item Para poder saber los vinos que ha vendido cada sucursal, la tabla \textbf{SucursalVendeVino} se va a fragmentar horizontalmente de manera derivada por el atributo \textit{\#sucursal}.
+\item Puesto que los clientes tienen que solicitar suministros de cualquier vino a través de sucursales de la delegación a la que pertenece su comunidad autónoma, la tabla \textbf{Cliente} se va a fragmentar horizontalmente de manera primaria con el atributo \textit{CA\_cliente}.
+\item Para poder tener la información de los clientes y los pedidos que ha realizado, la tabla \textbf{ClienteSolicitaVinoASucursal} se va a fragmentar horizontalmente de manera derivada por el atributo \textit{\#cliente}.
+\item Sobre la tabla \textbf{Vino} se va a realizar una fragmentación horizontal primaria con el atributo \textit{CA\_vino}, ya que será distribuido, mayoritariamente, por diferentes lugares de la correspondiente comunidad autónoma.
+\end{itemize}
+
+\subsection {Determinar qué relaciones o fragmentos deben o pueden replicarse y por qué}
+\begin{itemize}
+\item Puesto que los productores pueden producir vinos de diferentes comunidades autónomas, etc. La tabla \textbf{Productor} se va a replicar para poder tener la información de los productores en todos los fragmentos.
+\item Por otro lado, la relación \textbf{SucursalSolicitaSucursal} no es conveniente fragmentarlo porque una sucursal no puede solicitar pedidos a una sucursal de su misma delegación. Por tanto, es necesario replicar la información de esta tabla por si es necesario acceder a la información de las dos sucursales involucradas en un pedido.
+\end{itemize}
+
+\subsection{Realizar un diseño distribuido para esta base de datos}
+\subsubsection{Sucursal}
+El atributo elegido para la fragmentación es la comunidad autónoma que contamos con 19 diferentes. Por tanto, tenemos $2^{19}$ términos de predicado posibles pero por la definición del problema sabemos que una sucursal solo puede estar en una comunidad autónoma. Es decir, los predicados verdaderos son los que tienen un único predicado afirmado y todos los demas, 18, negados. \\
+
+P = \{ $p_{1}$: CA\_sucursal = 'Castilla-León', \\$p_{2}$: CA\_sucursal = 'Castilla-La Mancha', \\$p_{3}$: CA\_sucursal = 'Aragón', 
+	$p_{4}$: CA\_sucursal = 'Madrid', \\$p_{5}$: CA\_sucursal = 'La Rioja', $p_{6}$: CA\_sucursal = 'Cataluña', 
+	\\$p_{7}$: CA\_sucursal = 'Baleares', $p_{8}$: CA\_sucursal = 'Valencia', \\$p_{9}$: CA\_sucursal = 'Murcia', 
+	$p_{10}$: CA\_sucursal = 'Galicia', \\$p_{11}$: CA\_sucursal = 'Asturias', $p_{12}$: CA\_sucursal = 'Cantabria', 
+	\\$p_{13}$: CA\_sucursal = 'País Vasco', $p_{14}$: CA\_sucursal = 'Navarra', \\$p_{15}$: CA\_sucursal = 'Andalucía', 
+	$p_{16}$: CA\_sucursal = 'Extremadura', $p_{17}$: CA\_sucursal = 'Canarias', $p_{18}$: CA\_sucursal = 'Ceuta',
+	\\$p_{19}$: CA\_sucursal = 'Melilla' \}\\
+
+P es un conjunto completo y minimal y, como se ha comentado anteriormente, cada predicado tiene la siguiente estructura: \\
+
+$p_{1}$: CA\_sucursal = 'Castilla-León' $\land$ CA\_sucursal $\neq$ 'Castilla-La Mancha' $\land$ CA\_sucursal $\neq$ 'Aragón' $\land$ ... \\
+
+Pero por simplificar, se especifica el afirmado y se omiten los negados. A continuación se van a establecer cuatro términos de predicados diferentes:
+
+\begin{itemize}
+\item $Y_{1}$ = \{ $p_{1}$ $\vee$ $p_{2}$ $\vee$ $p_{3}$ $\vee$ $p_{4}$ $\vee$ $p_{5}$\}
+\item $Y_{2}$ = \{ $p_{6}$ $\vee$ $p_{7}$ $\vee$ $p_{8}$ $\vee$ $p_{9}$\}
+\item $Y_{3}$ = \{ $p_{10}$ $\vee$ $p_{11}$ $\vee$ $p_{12}$ $\vee$ $p_{13}$ $\vee$ $p_{14}$\}
+\item $Y_{4}$ = \{ $p_{15}$ $\vee$ $p_{16}$ $\vee$ $p_{17}$ $\vee$ $p_{18}$ $\vee$ $p_{19}$\}
+\end{itemize}
+
+Que corresponden con los siguientes fragmentos: 
+
+\begin{itemize}
+\item $Sucursal_{1}$ = $SL_{Y_{1}}$ (Sucursal)
+\item $Sucursal_{2}$ = $SL_{Y_{2}}$ (Sucursal)
+\item $Sucursal_{3}$ = $SL_{Y_{3}}$ (Sucursal)
+\item $Sucursal_{4}$ = $SL_{Y_{4}}$ (Sucursal)
+\end{itemize}
+
+\subsubsection{Empleado}
+
+La relación \textbf{Empleado} se fragmenta a partir de la relación \textit{Sucursal}, por tanto los fragmentos correspondientes son: \\
+\begin{itemize}
+\item $Empleado_{1}$ = Empleado $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{1}$
+\item $Empleado_{2}$ = Empleado $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{2}$
+\item $Empleado_{3}$ = Empleado $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{3}$
+\item $Empleado_{4}$ = Empleado $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{4}$
+\end{itemize}
+
+\subsubsection{SucursalVendeVino}
+
+La relación \textbf{SucursalVendeVino} se fragmenta a partir de la relación \textit{Sucursal}, por tanto los fragmentos correspondientes son: \\
+\begin{itemize}
+\item $SucursalVendeVino_{1}$ = SucursalVendeVino $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{1}$
+\item $SucursalVendeVino_{2}$ = SucursalVendeVino $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{2}$
+\item $SucursalVendeVino_{3}$ = SucursalVendeVino $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{3}$
+\item $SucursalVendeVino_{4}$ = SucursalVendeVino $SJN_{\#sucursal = \#sucursal}$ $Sucursal_{4}$
+\end{itemize}
+
+\subsubsection{Cliente}
+Con la relación \textbf{Cliente} se procede de manera análoga que con \textit{Sucursal}, es decir, se fragmenta horizontalmente de manera primaria por el atributo comunidad autónoma. Por tanto, el conjunto de términos de predicado son los siguientes:\\
+
+P = \{ $p_{1}$: CA\_cliente = 'Castilla-León', \\$p_{2}$: CA\_cliente = 'Castilla-La Mancha', \\$p_{3}$: CA\_cliente = 'Aragón', 
+	$p_{4}$: CA\_cliente = 'Madrid', \\$p_{5}$: CA\_cliente = 'La Rioja', $p_{6}$: CA\_cliente = 'Cataluña', 
+	\\$p_{7}$: CA\_cliente = 'Baleares', $p_{8}$: CA\_cliente = 'Valencia', \\$p_{9}$: CA\_cliente = 'Murcia', 
+	$p_{10}$: CA\_cliente = 'Galicia', \\$p_{11}$: CA\_cliente = 'Asturias', $p_{12}$: CA\_cliente = 'Cantabria', 
+	\\$p_{13}$: CA\_cliente = 'País Vasco', $p_{14}$: CA\_cliente = 'Navarra', \\$p_{15}$: CA\_cliente = 'Andalucía', 
+	$p_{16}$: CA\_cliente = 'Extremadura', $p_{17}$: CA\_cliente = 'Canarias', $p_{18}$: CA\_cliente = 'Ceuta',
+	\\$p_{19}$: CA\_cliente = 'Melilla' \}\\
+
+P es un conjunto completo y minimal y, como se ha comentado anteriormente, cada predicado tiene la siguiente estructura: \\
+
+$p_{1}$: CA\_cliente = 'Castilla-León' $\land$ CA\_cliente $\neq$ 'Castilla-La Mancha' $\land$ CA\_cliente $\neq$ 'Aragón' $\land$ ... \\
+
+Pero por simplificar, se especifica el afirmado y se omiten los negados. A continuación se van a establecer cuatro términos de predicados diferentes:
+
+\begin{itemize}
+\item $Y_{1}$ = \{ $p_{1}$ $\vee$ $p_{2}$ $\vee$ $p_{3}$ $\vee$ $p_{4}$ $\vee$ $p_{5}$\}
+\item $Y_{2}$ = \{ $p_{6}$ $\vee$ $p_{7}$ $\vee$ $p_{8}$ $\vee$ $p_{9}$\}
+\item $Y_{3}$ = \{ $p_{10}$ $\vee$ $p_{11}$ $\vee$ $p_{12}$ $\vee$ $p_{13}$ $\vee$ $p_{14}$\}
+\item $Y_{4}$ = \{ $p_{15}$ $\vee$ $p_{16}$ $\vee$ $p_{17}$ $\vee$ $p_{18}$ $\vee$ $p_{19}$\}
+\end{itemize}
+
+Que corresponden con los siguientes fragmentos: 
+
+\begin{itemize}
+\item $Cliente_{1}$ = $SL_{Y_{1}}$ (Cliente)
+\item $Cliente_{2}$ = $SL_{Y_{2}}$ (Cliente)
+\item $Cliente_{3}$ = $SL_{Y_{3}}$ (Cliente)
+\item $Cliente_{4}$ = $SL_{Y_{4}}$ (Cliente)
+\end{itemize}
+
+\subsubsection{ClienteSolicitaVinoASucursal}
+
+La relación \textbf{ClienteSolicitaVinoASucursal} se fragmenta a partir de la relación \textit{Cliente}, por tanto los fragmentos correspondientes son: \\
+\begin{itemize}
+\item $ClienteSolicitaVinoASucursal_{1}$ = ClienteSolicitaVinoASucursal $SJN_{\#cliente = \#cliente}$ $Cliente_{1}$
+\item $ClienteSolicitaVinoASucursal_{2}$ = ClienteSolicitaVinoASucursal $SJN_{\#cliente = \#cliente}$ $Cliente_{2}$
+\item $ClienteSolicitaVinoASucursal_{3}$ = ClienteSolicitaVinoASucursal $SJN_{\#cliente = \#cliente}$ $Cliente_{3}$
+\item $ClienteSolicitaVinoASucursal_{4}$ = ClienteSolicitaVinoASucursal $SJN_{\#cliente = \#cliente}$ $Cliente_{4}$
+\end{itemize}
+
+\subsubsection{Vino}
+Con la relación \textbf{Vino} se procede de manera análoga que con \textit{Sucursal} y \textit{Cliente}, es decir, se fragmenta horizontalmente de manera primaria por el atributo comunidad autónoma. Por tanto, el conjunto de términos de predicado son los siguientes:\\
+
+P = \{ $p_{1}$: CA\_vino = 'Castilla-León', \\$p_{2}$: CA\_vino = 'Castilla-La Mancha', \\$p_{3}$: CA\_vino = 'Aragón', 
+	$p_{4}$: CA\_vino = 'Madrid', \\$p_{5}$: CA\_vino = 'La Rioja', $p_{6}$: CA\_vino = 'Cataluña', 
+	\\$p_{7}$: CA\_vino = 'Baleares', $p_{8}$: CA\_vino = 'Valencia', \\$p_{9}$: CA\_vino = 'Murcia', 
+	$p_{10}$: CA\_vino = 'Galicia', \\$p_{11}$: CA\_vino = 'Asturias', $p_{12}$: CA\_vino = 'Cantabria', 
+	\\$p_{13}$: CA\_vino = 'País Vasco', $p_{14}$: CA\_vino = 'Navarra', \\$p_{15}$: CA\_vino = 'Andalucía', 
+	$p_{16}$: CA\_vino = 'Extremadura', $p_{17}$: CA\_vino = 'Canarias', $p_{18}$: CA\_vino = 'Ceuta',
+	\\$p_{19}$: CA\_vino = 'Melilla' \}\\
+
+P es un conjunto completo y minimal y, como se ha comentado anteriormente, cada predicado tiene la siguiente estructura: \\
+
+$p_{1}$: CA\_vino = 'Castilla-León' $\land$ CA\_vino $\neq$ 'Castilla-La Mancha' $\land$ CA\_vino $\neq$ 'Aragón' $\land$ ... \\
+
+Pero por simplificar, se especifica el afirmado y se omiten los negados. A continuación se van a establecer cuatro términos de predicados diferentes:
+
+\begin{itemize}
+\item $Y_{1}$ = \{ $p_{1}$ $\vee$ $p_{2}$ $\vee$ $p_{3}$ $\vee$ $p_{4}$ $\vee$ $p_{5}$\}
+\item $Y_{2}$ = \{ $p_{6}$ $\vee$ $p_{7}$ $\vee$ $p_{8}$ $\vee$ $p_{9}$\}
+\item $Y_{3}$ = \{ $p_{10}$ $\vee$ $p_{11}$ $\vee$ $p_{12}$ $\vee$ $p_{13}$ $\vee$ $p_{14}$\}
+\item $Y_{4}$ = \{ $p_{15}$ $\vee$ $p_{16}$ $\vee$ $p_{17}$ $\vee$ $p_{18}$ $\vee$ $p_{19}$\}
+\end{itemize}
+
+Que corresponden con los siguientes fragmentos: 
+
+\begin{itemize}
+\item $Vino_{1}$ = $SL_{Y_{1}}$ (Vino)
+\item $Vino_{2}$ = $SL_{Y_{2}}$ (Vino)
+\item $Vino_{3}$ = $SL_{Y_{3}}$ (Vino)
+\item $Vino_{4}$ = $SL_{Y_{4}}$ (Vino)
+\end{itemize}
+
+\newpage
+\subsection{Determinar una asignación de fragmentos, réplicas y relaciones o tablas no fragmentadas, que se adecue a los requerimientos de las aplicaciones}
+
+\subsubsection{Sucursal, Empleado y SucursalVendeVino}
+La asignación de los fragmentos a las diferentes localidades son las siguientes:
+
+\begin{itemize}
+\item $Sucursal_{1}$, $Empleado_{1}$ y $SucursalVendeVino_{1}$ $\Rightarrow$ Madrid
+\item $Sucursal_{2}$, $Empleado_{2}$ y $SucursalVendeVino_{2}$ $\Rightarrow$ Barcelona
+\item $Sucursal_{3}$, $Empleado_{3}$ y $SucursalVendeVino_{3}$ $\Rightarrow$ La Coruña
+\item $Sucursal_{4}$, $Empleado_{4}$ y $SucursalVendeVino_{4}$ $\Rightarrow$ Sevilla
+\end{itemize}
+
+\subsubsection{Cliente y ClienteSolicitaVinoASucursal}
+La asignación de los fragmentos a las diferentes localidades son las siguientes:
+
+\begin{itemize}
+\item $Cliente_{1}$ y $ClienteSolicitaVinoASucursal_{1}$ $\Rightarrow$ Madrid
+\item $Cliente_{2}$ y $ClienteSolicitaVinoASucursal_{2}$ $\Rightarrow$ Barcelona
+\item $Cliente_{3}$ y $ClienteSolicitaVinoASucursal_{3}$ $\Rightarrow$ La Coruña
+\item $Cliente_{4}$ y $ClienteSolicitaVinoASucursal_{4}$ $\Rightarrow$ Sevilla
+\end{itemize}
+
+\subsubsection{Vino}
+La asignación de los fragmentos a las diferentes localidades son las siguientes:
+
+\begin{itemize}
+\item $Vino_{1}$ $\Rightarrow$ Madrid
+\item $Vino_{2}$ $\Rightarrow$ Barcelona
+\item $Vino_{3}$ $\Rightarrow$ La Coruña
+\item $Vino_{4}$ $\Rightarrow$ Sevilla
+\end{itemize}
+
+\subsubsection{Productor y SucursalSolicitaSucursal}
+\begin{itemize}
+\item Un productor puede producir vino en diferentes localidades, por lo que será interesante la presencia de la tabla productor completa en cada localidad.
+\item La relación SucursalSolicitaSucursal se replicará en las localidades donde haya sucursales, es decir, todas. De esta manera la sucursal que pida el encargo y la sucursal que reciba el encargo tendrán en sus localidades los datos del encargo.
+\end{itemize}
+
+
+\end{document}
+
+
+nodo ---> eigenvector centrality
+color -->betweeness centrality
